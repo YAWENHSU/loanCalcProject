@@ -31,10 +31,10 @@
         <br>
         <input type="button" value="計算" onclick="roanCalc()">
     </form>
-    <ul id="result">
+    <div id="result">
 
-    </ul>
-    <table id="resultTable" border="1">
+    </div>
+    <table id="resultTable" border="1" hidden>
         <thead>
             <tr>
                 <th>期別</th>
@@ -96,9 +96,22 @@
                 }
 
             }
+
+            //計算期數、總利息、還款總金額
+            let totalInterest = 0;
+            for (let i = 0; i < resultPayment.length; i++) {
+                totalInterest += resultPayment[i][2];
+            }
+
+
+            resultEl.innerHTML = `期數:${resultPayment.length} 總利息:${totalInterest}
+            還款總金額:${loanAmount + totalInterest}`;
+
+
             drawTable(resultPayment)
         }
 
+        //繪製表格
         function drawTable(resultPayment) {
             //console.log(tableTbodyEl, resultPayment);
             let tableHtml = "";
@@ -109,6 +122,9 @@
                     tableHtml += `<td>${resultPayment[i][j]}</td>`;
                 }
                 tableHtml += "</tr>";
+            }
+            if (tableHtml != "") {
+                document.querySelector("#resultTable").style.display = "table";
             }
             tableTbodyEl.innerHTML = tableHtml;
 
