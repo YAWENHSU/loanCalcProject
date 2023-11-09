@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>貸款利息計算器</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -104,8 +105,8 @@
             }
 
 
-            resultEl.innerHTML = `期數:${resultPayment.length} 總利息:${totalInterest}
-            還款總金額:${loanAmount + totalInterest}`;
+            resultEl.innerHTML = `期數:${resultPayment.length}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;總利息:${totalInterest}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;還款總金額:${loanAmount + totalInterest}`;
 
 
             drawTable(resultPayment)
