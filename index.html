@@ -34,12 +34,28 @@
     <ul id="result">
 
     </ul>
+    <table id="resultTable" border="1">
+        <thead>
+            <tr>
+                <th>期別</th>
+                <th>本金</th>
+                <th>利息</th>
+                <th>本利和</th>
+                <th>餘額</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+
+    </table>
     <script>
         const loanAmountEl = document.querySelector("#loanAmount");
         const interestRateEl = document.querySelector("#interestRate");
         const loanYearEl = document.querySelector("#loanYear");
         const principalPaymentEl = document.querySelector("#principalPayment");
         const resultEl = document.querySelector("#result");
+        const tableTbodyEl = document.querySelector("#resultTable>tbody");
 
 
 
@@ -60,28 +76,42 @@
             //固定還款金額
             let monthPay = parseInt(amount / months);
 
+            let resultPayment = [];
+
             console.log(amount, months, monthRate, monthPay);
-            let liText = "";
             //跑動期數
             for (let i = 0; i < months; i++) {
                 //計算每個月利息
                 let interest = Math.round(amount * monthRate)
                 //減少餘額
-                amount -= monthPay
+                amount -= monthPay;
                 //最後一期
                 let text = "";
                 if (i == months - 1) {
-                    text = `期別:${i + 1} 本金:${monthPay + amount} 利息:${interest} 本利和:${monthPay + interest + amount} 餘額:0`;
+                    resultPayment.push([i + 1, monthPay + amount, interest, monthPay + interest + amount, 0]);
 
                 }
                 else {
-                    text = `期別:${i + 1} 本金:${monthPay} 利息:${interest} 本利和:${monthPay + interest} 餘額:${amount}`;
-
+                    resultPayment.push([i + 1, monthPay, interest, monthPay + interest, amount]);
                 }
-                liText += `<li>${text}</li>`;
-                console.log(text);
+
             }
-            resultEl.innerHTML = liText;
+            drawTable(resultPayment)
+        }
+
+        function drawTable(resultPayment) {
+            //console.log(tableTbodyEl, resultPayment);
+            let tableHtml = "";
+            for (let i = 0; i < resultPayment.length; i++) {
+                tableHtml += "<tr>";
+                for (let j = 0; j < resultPayment[i].length; j++) {
+                    //td
+                    tableHtml += `<td>${resultPayment[i][j]}</td>`;
+                }
+                tableHtml += "</tr>";
+            }
+            tableTbodyEl.innerHTML = tableHtml;
+
         }
 
     </script>
